@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI4Community | Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue:        #2563EB;
+    --blue-light:  #EFF6FF;
+    --blue-mid:    #BFDBFE;
+    --purple:      #7C3AED;
+    --purple-light:#F5F3FF;
+    --purple-mid:  #DDD6FE;
+    --green:       #10B981;
+    --green-light: #ECFDF5;
+    --amber:       #F59E0B;
+    --amber-light: #FFFBEB;
+    --red:         #EF4444;
+    --red-light:   #FEF2F2;
+    --gray-50:     #F8FAFC;
+    --gray-100:    #F1F5F9;
+    --gray-200:    #E2E8F0;
+    --gray-300:    #CBD5E1;
+    --gray-400:    #94A3B8;
+    --gray-500:    #64748B;
+    --gray-600:    #475569;
+    --gray-700:    #334155;
+    --gray-800:    #1E293B;
+    --gray-900:    #0F172A;
+    --white:       #FFFFFF;
+    --shadow-sm:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md:   0 4px 12px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.04);
+    --shadow-lg:   0 10px 32px rgba(0,0,0,.08), 0 4px 8px rgba(0,0,0,.04);
+    --radius:      12px;
+    --radius-lg:   16px;
+    --radius-xl:   20px;
+    --topbar-h:    60px;
+  }
+  html, body { height: 100%; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--gray-800); background: var(--gray-50); overflow-x: hidden; }
+
+  /* ─── TOPBAR ─────────────────────────────────── */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--topbar-h);
+    background: var(--white); border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; z-index: 100; box-shadow: var(--shadow-sm);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .topbar-logo img { width: 30px; height: 30px; }
+  .topbar-logo span { font-weight: 700; font-size: 15px; color: var(--gray-900); }
+  .topbar-divider { width: 1px; height: 24px; background: var(--gray-200); }
+  .topbar-title { font-size: 13px; font-weight: 500; color: var(--gray-500); }
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .icon-btn {
+    width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--gray-200);
+    background: var(--white); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--gray-500); transition: all .15s; font-size: 18px;
+  }
+  .icon-btn:hover { background: var(--gray-50); color: var(--blue); }
+  .avatar-sm { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--purple)); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-link { padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--gray-500); text-decoration: none; transition: all .15s; }
+  .nav-link:hover { background: var(--gray-100); color: var(--gray-800); }
+  .nav-link.active { background: var(--blue-light); color: var(--blue); font-weight: 600; }
+
+  /* ─── MAIN LAYOUT ────────────────────────────── */
+  .layout { padding-top: var(--topbar-h); min-height: 100vh; display: flex; justify-content: center; }
+  .container { width: 100%; max-width: 1200px; padding: 32px 24px 100px; }
+
+  /* ─── BUTTONS ────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;
+    border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+    border: none; transition: all .15s; white-space: nowrap;
+  }
+  .btn-primary { background: var(--blue); color: white; box-shadow: 0 2px 8px rgba(37,99,235,.25); }
+  .btn-primary:hover { background: #1d4ed8; box-shadow: 0 4px 16px rgba(37,99,235,.3); }
+  .btn-secondary { background: var(--white); color: var(--gray-700); border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); }
+  .btn-secondary:hover { background: var(--gray-50); border-color: var(--gray-300); }
+  .btn .ms { font-size: 18px; }
+
+  /* ─── GRID SYSTEM ────────────────────────────── */
+  .grid { display: grid; gap: 24px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-5 { grid-template-columns: repeat(5, 1fr); }
+  @media(max-width: 1024px) { .grid-4, .grid-5 { grid-template-columns: repeat(3, 1fr); } }
+  @media(max-width: 768px) { .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; } }
+  .col-span-2 { grid-column: span 2; }
+  @media(max-width: 768px) { .col-span-2 { grid-column: span 1; } }
+
+  /* ─── CARDS ──────────────────────────────────── */
+  .card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+  .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .card-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; justify-content: space-between; }
+  .card-title { font-size: 15px; font-weight: 700; color: var(--gray-900); display: flex; align-items: center; gap: 8px; }
+  .card-title .ms { color: var(--blue); font-size: 20px; }
+  .card-body { padding: 24px; }
+
+  /* ─── PROFILE HEADER ─────────────────────────── */
+  .profile-header {
+    background: var(--white); border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm);
+    position: relative; overflow: hidden; margin-bottom: 24px;
+  }
+  .profile-cover { height: 120px; background: linear-gradient(135deg, var(--blue), var(--purple)); position: relative; }
+  .profile-cover::after { content: ''; position: absolute; inset: 0; background: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1.5" fill="white" fill-opacity="0.1"/></svg>') repeat; }
+  .profile-info-bar { padding: 20px 32px 32px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; }
+  .profile-main { display: flex; gap: 24px; align-items: flex-end; margin-top: -64px; position: relative; z-index: 10; }
+  .profile-avatar {
+    width: 120px; height: 120px; border-radius: 50%;
+    border: 4px solid var(--white); background: var(--white);
+    box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-avatar-placeholder { font-size: 40px; font-weight: 800; color: var(--blue); background: var(--blue-light); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .profile-details { padding-bottom: 4px; }
+  .profile-name { font-size: 24px; font-weight: 800; color: var(--gray-900); margin-bottom: 4px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+  .profile-name .ms { color: var(--blue); font-size: 20px; }
+  .profile-role { font-size: 14px; font-weight: 500; color: var(--gray-600); display: flex; align-items: center; gap: 6px; }
+  .profile-meta { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+  .meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--gray-500); }
+  .meta-item .ms { font-size: 16px; color: var(--gray-400); }
+
+  /* ─── KPI CARDS ──────────────────────────────── */
+  .kpi-card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); padding: 20px; transition: all .2s; cursor: default; }
+  .kpi-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); border-color: var(--blue-mid); }
+  .kpi-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+  .kpi-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .kpi-icon.blue   { background: var(--blue-light);   color: var(--blue); }
+  .kpi-icon.purple { background: var(--purple-light);  color: var(--purple); }
+  .kpi-icon.green  { background: var(--green-light);   color: var(--green); }
+  .kpi-icon.amber  { background: var(--amber-light);   color: var(--amber); }
+  .kpi-val  { font-size: 28px; font-weight: 800; color: var(--gray-900); line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .kpi-label{ font-size: 13px; color: var(--gray-500); font-weight: 600; }
+
+  /* ─── TABLES ─────────────────────────────────── */
+  .tbl { width: 100%; border-collapse: collapse; }
+  .tbl th { font-size: 12px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: .05em; padding: 14px 16px; border-bottom: 1px solid var(--gray-200); text-align: left; background: var(--gray-50); }
+  .tbl td { padding: 14px 16px; font-size: 13px; color: var(--gray-700); border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: var(--blue-light); }
+  
+  /* ─── TAGS & BADGES ──────────────────────────── */
+  .tag { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .tag-green { background: var(--green-light); color: var(--green); }
+  .tag-blue { background: var(--blue-light); color: var(--blue); }
+  .tag-purple { background: var(--purple-light); color: var(--purple); }
+
+  /* ─── TIMELINE ───────────────────────────────── */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .tl-item { display: flex; gap: 16px; padding-bottom: 24px; position: relative; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot-wrap { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .tl-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--blue-light); color: var(--blue); flex-shrink: 0; z-index: 2; }
+  .tl-dot.purple { background: var(--purple-light); color: var(--purple); }
+  .tl-dot.green { background: var(--green-light); color: var(--green); }
+  .tl-dot.amber { background: var(--amber-light); color: var(--amber); }
+  .tl-dot .ms { font-size: 16px; }
+  .tl-line { width: 2px; flex: 1; background: var(--gray-200); margin-top: 4px; }
+  .tl-item:last-child .tl-line { display: none; }
+  .tl-content { padding-top: 6px; }
+  .tl-title { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+  .tl-title b { color: var(--gray-900); }
+  .tl-time { font-size: 12px; color: var(--gray-500); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+  .tl-time .ms { font-size: 14px; }
+
+  /* ─── ACHIEVEMENTS ───────────────────────────── */
+  .badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 16px; text-align: center; }
+  .achv-badge { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px; border-radius: var(--radius); background: var(--gray-50); border: 1px solid var(--gray-200); transition: all 0.2s; }
+  .achv-badge:hover { background: var(--white); border-color: var(--blue-mid); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+  .achv-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--blue-light), var(--purple-light)); color: var(--blue); font-size: 28px; box-shadow: inset 0 0 0 2px var(--white), 0 4px 12px rgba(37,99,235,0.15); }
+  .achv-icon.gold { background: linear-gradient(135deg, #FEF3C7, #FDE68A); color: #D97706; box-shadow: inset 0 0 0 2px var(--white), 0 4px 12px rgba(217,119,6,0.15); }
+  .achv-title { font-size: 12px; font-weight: 700; color: var(--gray-800); line-height: 1.3; }
+
+  /* ─── CHARTS ─────────────────────────────────── */
+  .chart-wrap { position: relative; width: 100%; height: 260px; }
+  .chart-wrap canvas { width: 100% !important; height: 100% !important; }
+  .chart-sm { height: 180px; }
+
+  /* ─── RECENT REPORTS ─────────────────────────── */
+  .report-list { display: flex; flex-direction: column; gap: 12px; }
+  .report-item { display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid var(--gray-200); border-radius: var(--radius); background: var(--white); transition: all 0.2s; }
+  .report-item:hover { border-color: var(--blue-mid); box-shadow: var(--shadow-sm); }
+  .report-info { display: flex; align-items: center; gap: 16px; }
+  .report-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--red-light); color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .report-icon.pdf { background: var(--red-light); color: var(--red); }
+  .report-icon.xls { background: var(--green-light); color: var(--green); }
+  .report-details h4 { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
+  .report-details p { font-size: 12px; color: var(--gray-500); }
+</style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="topbar-logo" href="index.html">
+        <img src="logo.svg" alt="Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect x=\'20\' y=\'20\' width=\'60\' height=\'60\' rx=\'15\' fill=\'%232563EB\'/><circle cx=\'40\' cy=\'40\' r=\'4\' fill=\'white\'/><circle cx=\'60\' cy=\'40\' r=\'4\' fill=\'white\'/><path d=\'M40 55 Q50 65 60 55\' stroke=\'white\' stroke-width=\'3\' fill=\'none\' stroke-linecap=\'round\'/></svg>'"/>
+        <span>Analytics AI</span>
+      </a>
+      <div class="topbar-divider"></div>
+      <div class="nav-links">
+        <a class="nav-link" href="workspace.html">Upload Dataset</a>
+        <a class="nav-link" href="analytics.html">Analytics</a>
+        <a class="nav-link" href="reports.html">Reports</a>
+        <a class="nav-link" href="settings.html">Settings</a>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" title="Search"><span class="ms">search</span></button>
+      <button class="icon-btn" title="Notifications"><span class="ms">notifications</span></button>
+      <div class="avatar-sm" style="box-shadow: 0 2px 8px rgba(37,99,235,0.3); transform: scale(1.05);">
+        <a href="profile.html" style="color:inherit;text-decoration:none;display:block;width:100%;height:100%;text-align:center;line-height:32px;">AN</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div class="container">
+      
+      <!-- HEADER / PROFILE TOP SECTION -->
+      <div class="profile-header">
+        <div class="profile-cover"></div>
+        <div class="profile-info-bar">
+          <div class="profile-main">
+            <div class="profile-avatar">
+              <div class="profile-avatar-placeholder">AN</div>
+              <!-- <img src="path_to_image" alt="Profile" /> -->
+            </div>
+            <div class="profile-details">
+              <h1 class="profile-name">Alex Newman <span class="ms" title="Verified Account">verified</span></h1>
+              <div class="profile-role">
+                <span class="ms" style="font-size:18px">work</span> Lead Data Scientist
+              </div>
+              <div class="profile-meta">
+                <div class="meta-item"><span class="ms">business</span> Global Tech Corp</div>
+                <div class="meta-item"><span class="ms">mail</span> alex.newman@example.com</div>
+                <div class="meta-item"><span class="ms">location_on</span> San Francisco, USA</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; padding-bottom:4px;">
+            <button class="btn btn-secondary"><span class="ms">photo_camera</span> Upload Photo</button>
+            <a href="settings.html" class="btn btn-primary" style="text-decoration:none;"><span class="ms">edit</span> Edit Profile</a>
+          </div>
+        </div>
+        <div style="background:var(--gray-50); padding:12px 32px; border-top:1px solid var(--gray-200); display:flex; gap:24px;">
+          <div style="font-size:12px; color:var(--gray-500);"><b>Member Since:</b> Jan 2024</div>
+          <div style="font-size:12px; color:var(--gray-500);"><b>Last Active:</b> Just now</div>
+        </div>
+      </div>
+
+      <!-- STATISTICS CARDS -->
+      <div class="grid grid-5" style="margin-bottom: 32px;">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-icon blue"><span class="ms">dataset</span></div>
+          </div>
+          <div class="kpi-val">124</div>
+          <div class="kpi-label">Datasets Uploaded</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-icon purple"><span class="ms">analytics</span></div>
+          </div>
+          <div class="kpi-val">842</div>
+          <div class="kpi-label">AI Analyses</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-icon amber"><span class="ms">description</span></div>
+          </div>
+          <div class="kpi-val">56</div>
+          <div class="kpi-label">Reports Generated</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-icon green"><span class="ms">verified_user</span></div>
+          </div>
+          <div class="kpi-val">98%</div>
+          <div class="kpi-label">AI Confidence Score</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-icon blue"><span class="ms">trending_up</span></div>
+          </div>
+          <div class="kpi-val">94%</div>
+          <div class="kpi-label">Prediction Success</div>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT GRID -->
+      <div class="grid grid-3">
+        
+        <!-- LEFT COLUMN: Charts & History -->
+        <div class="col-span-2 grid grid-1" style="gap:24px;">
+          
+          <!-- USAGE ANALYTICS -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span class="ms">insights</span> Usage Analytics</h2>
+            </div>
+            <div class="card-body">
+              <div class="grid grid-2" style="margin-bottom:24px;">
+                <div class="chart-wrap chart-sm"><canvas id="chart-activity"></canvas></div>
+                <div class="chart-wrap chart-sm"><canvas id="chart-ai-usage"></canvas></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DATASET HISTORY -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span class="ms">history</span> Dataset History</h2>
+              <button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">View All</button>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <div style="overflow-x:auto;">
+                <table class="tbl">
+                  <thead>
+                    <tr>
+                      <th>Dataset Name</th>
+                      <th>Type</th>
+                      <th>Total Records</th>
+                      <th>Upload Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><div style="font-weight:600;color:var(--gray-900);">Q4_User_Engagement</div></td>
+                      <td><span class="tag tag-blue">CSV</span></td>
+                      <td style="font-family:'JetBrains Mono', monospace;">12,402</td>
+                      <td>Oct 12, 2024</td>
+                      <td><span class="tag tag-green">Processed</span></td>
+                      <td><button class="btn btn-secondary" style="padding:4px 8px;font-size:12px;">View</button></td>
+                    </tr>
+                    <tr>
+                      <td><div style="font-weight:600;color:var(--gray-900);">Sales_Forecast_2025</div></td>
+                      <td><span class="tag tag-green">XLSX</span></td>
+                      <td style="font-family:'JetBrains Mono', monospace;">8,920</td>
+                      <td>Oct 10, 2024</td>
+                      <td><span class="tag tag-green">Processed</span></td>
+                      <td><button class="btn btn-secondary" style="padding:4px 8px;font-size:12px;">View</button></td>
+                    </tr>
+                    <tr>
+                      <td><div style="font-weight:600;color:var(--gray-900);">Customer_Feedback_Raw</div></td>
+                      <td><span class="tag tag-purple">JSON</span></td>
+                      <td style="font-family:'JetBrains Mono', monospace;">45,100</td>
+                      <td>Oct 08, 2024</td>
+                      <td><span class="tag tag-blue">Analyzing</span></td>
+                      <td><button class="btn btn-secondary" style="padding:4px 8px;font-size:12px;" disabled>Wait</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- RECENT REPORTS -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span class="ms">description</span> Recent Reports</h2>
+            </div>
+            <div class="card-body">
+              <div class="report-list">
+                <div class="report-item">
+                  <div class="report-info">
+                    <div class="report-icon pdf"><span class="ms">picture_as_pdf</span></div>
+                    <div class="report-details">
+                      <h4>Executive Summary - Q4 Engagement</h4>
+                      <p>Generated on Oct 14, 2024 · Q4_User_Engagement.csv</p>
+                    </div>
+                  </div>
+                  <button class="btn btn-secondary"><span class="ms">download</span> Download</button>
+                </div>
+                <div class="report-item">
+                  <div class="report-info">
+                    <div class="report-icon xls"><span class="ms">table_view</span></div>
+                    <div class="report-details">
+                      <h4>Anomaly Detection Log</h4>
+                      <p>Generated on Oct 12, 2024 · Server_Logs_Sep.csv</p>
+                    </div>
+                  </div>
+                  <button class="btn btn-secondary"><span class="ms">download</span> Download</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Timeline & Achievements -->
+        <div class="grid grid-1" style="gap:24px; align-content:start;">
+          
+          <!-- ACHIEVEMENTS -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span class="ms">military_tech</span> Achievements</h2>
+            </div>
+            <div class="card-body">
+              <div class="badge-grid">
+                <div class="achv-badge">
+                  <div class="achv-icon"><span class="ms">emoji_events</span></div>
+                  <div class="achv-title">First Upload</div>
+                </div>
+                <div class="achv-badge">
+                  <div class="achv-icon"><span class="ms">psychology</span></div>
+                  <div class="achv-title">AI Power User</div>
+                </div>
+                <div class="achv-badge">
+                  <div class="achv-icon gold"><span class="ms">workspace_premium</span></div>
+                  <div class="achv-title">Analytics Expert</div>
+                </div>
+                <div class="achv-badge" style="opacity:0.5; filter:grayscale(1);">
+                  <div class="achv-icon"><span class="ms">lock</span></div>
+                  <div class="achv-title">100 Reports</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI ACTIVITY TIMELINE -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title"><span class="ms">list_alt</span> AI Activity</h2>
+            </div>
+            <div class="card-body">
+              <div class="timeline">
+                <div class="tl-item">
+                  <div class="tl-dot-wrap">
+                    <div class="tl-dot purple"><span class="ms">auto_awesome</span></div>
+                    <div class="tl-line"></div>
+                  </div>
+                  <div class="tl-content">
+                    <div class="tl-title"><b>Trend Analysis</b> generated</div>
+                    <div class="tl-time"><span class="ms">schedule</span> 10 mins ago · Q4_User_Engagement</div>
+                  </div>
+                </div>
+                
+                <div class="tl-item">
+                  <div class="tl-dot-wrap">
+                    <div class="tl-dot green"><span class="ms">upload_file</span></div>
+                    <div class="tl-line"></div>
+                  </div>
+                  <div class="tl-content">
+                    <div class="tl-title"><b>Dataset uploaded</b> successfully</div>
+                    <div class="tl-time"><span class="ms">schedule</span> 2 hours ago · Sales_Forecast_2025</div>
+                  </div>
+                </div>
+                
+                <div class="tl-item">
+                  <div class="tl-dot-wrap">
+                    <div class="tl-dot amber"><span class="ms">warning</span></div>
+                    <div class="tl-line"></div>
+                  </div>
+                  <div class="tl-content">
+                    <div class="tl-title"><b>Anomaly detected</b> in transactions</div>
+                    <div class="tl-time"><span class="ms">schedule</span> Yesterday · Server_Logs_Sep</div>
+                  </div>
+                </div>
+                
+                <div class="tl-item">
+                  <div class="tl-dot-wrap">
+                    <div class="tl-dot blue"><span class="ms">lightbulb</span></div>
+                    <div class="tl-line"></div>
+                  </div>
+                  <div class="tl-content">
+                    <div class="tl-title"><b>Prediction model</b> optimized</div>
+                    <div class="tl-time"><span class="ms">schedule</span> Oct 12, 2024 · Model v4.2</div>
+                  </div>
+                </div>
+
+                <div class="tl-item">
+                  <div class="tl-dot-wrap">
+                    <div class="tl-dot"><span class="ms">picture_as_pdf</span></div>
+                    <div class="tl-line"></div>
+                  </div>
+                  <div class="tl-content">
+                    <div class="tl-title"><b>Report exported</b> via scheduled job</div>
+                    <div class="tl-time"><span class="ms">schedule</span> Oct 10, 2024 · Exec Summary</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <script>
+    if (typeof Chart !== 'undefined') {
+      Chart.defaults.font.family = "'Inter', sans-serif";
+      Chart.defaults.color = '#64748B';
+    }
+
+    window.addEventListener('load', () => {
+      if (typeof Chart === 'undefined') return;
+
+      // Weekly Activity Chart
+      const ctxActivity = document.getElementById('chart-activity');
+      if (ctxActivity) {
+        new Chart(ctxActivity, {
+          type: 'bar',
+          data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+              label: 'Actions (Uploads, Queries, Reports)',
+              data: [12, 19, 15, 25, 22, 5, 8],
+              backgroundColor: '#2563EB',
+              borderRadius: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              title: { display: true, text: 'Weekly Activity', font: { size: 13, weight: '600' } }
+            },
+            scales: {
+              y: { beginAtZero: true, grid: { color: '#F1F5F9' } },
+              x: { grid: { display: false } }
+            }
+          }
+        });
+      }
+
+      // AI Usage Doughnut
+      const ctxAi = document.getElementById('chart-ai-usage');
+      if (ctxAi) {
+        new Chart(ctxAi, {
+          type: 'doughnut',
+          data: {
+            labels: ['Data Cleaning', 'Trend Analysis', 'Predictions', 'Reporting'],
+            datasets: [{
+              data: [35, 40, 15, 10],
+              backgroundColor: ['#2563EB', '#7C3AED', '#10B981', '#F59E0B'],
+              borderWidth: 0,
+              hoverOffset: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+              legend: { position: 'right', labels: { boxWidth: 10, usePointStyle: true, pointStyle: 'circle' } },
+              title: { display: true, text: 'AI Feature Usage', font: { size: 13, weight: '600' } }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

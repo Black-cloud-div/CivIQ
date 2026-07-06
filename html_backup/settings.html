@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Analytics AI | Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue:        #2563EB;
+    --blue-light:  #EFF6FF;
+    --blue-mid:    #BFDBFE;
+    --purple:      #7C3AED;
+    --purple-light:#F5F3FF;
+    --purple-mid:  #DDD6FE;
+    --green:       #10B981;
+    --green-light: #ECFDF5;
+    --amber:       #F59E0B;
+    --amber-light: #FFFBEB;
+    --red:         #EF4444;
+    --red-light:   #FEF2F2;
+    --gray-50:     #F8FAFC;
+    --gray-100:    #F1F5F9;
+    --gray-200:    #E2E8F0;
+    --gray-300:    #CBD5E1;
+    --gray-400:    #94A3B8;
+    --gray-500:    #64748B;
+    --gray-600:    #475569;
+    --gray-700:    #334155;
+    --gray-800:    #1E293B;
+    --gray-900:    #0F172A;
+    --white:       #FFFFFF;
+    --shadow-sm:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md:   0 4px 12px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.04);
+    --shadow-lg:   0 10px 32px rgba(0,0,0,.08), 0 4px 8px rgba(0,0,0,.04);
+    --radius:      10px;
+    --radius-lg:   14px;
+    --sidebar-w:   240px;
+    --topbar-h:    60px;
+  }
+  html, body { height: 100%; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--gray-800); background: var(--gray-50); overflow-x: hidden; }
+
+  /* ─── NEW TOPBAR ─────────────────────────────── */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--topbar-h);
+    background: var(--white); border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; z-index: 100; box-shadow: var(--shadow-sm);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .topbar-logo img { width: 30px; height: 30px; }
+  .topbar-logo span { font-weight: 700; font-size: 16px; color: var(--gray-900); letter-spacing: -0.02em; }
+  .topbar-divider { width: 1px; height: 24px; background: var(--gray-200); margin: 0 8px; }
+  
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-link { padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; color: var(--gray-500); text-decoration: none; transition: all .15s; }
+  .nav-link:hover { background: var(--gray-100); color: var(--gray-800); }
+  .nav-link.active { background: var(--blue-light); color: var(--blue); }
+
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .icon-btn {
+    width: 36px; height: 36px; border-radius: 8px; border: 1px solid transparent;
+    background: transparent; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--gray-500); transition: all .15s;
+  }
+  .icon-btn .ms { font-size: 20px; }
+  .icon-btn:hover { background: var(--gray-100); color: var(--blue); }
+  
+  .avatar-sm { 
+    width: 34px; height: 34px; border-radius: 50%; 
+    background: linear-gradient(135deg, var(--blue), var(--purple)); 
+    display: flex; align-items: center; justify-content: center; 
+    color: white; font-size: 12px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.2); transition: all 0.2s;
+  }
+  .avatar-sm:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
+
+  /* ─── LAYOUT ─────────────────────────────────── */
+  .layout { display: flex; padding-top: var(--topbar-h); min-height: 100vh; }
+  
+  .sidebar {
+    position: fixed; top: var(--topbar-h); left: 0; width: var(--sidebar-w);
+    height: calc(100vh - var(--topbar-h)); background: var(--white);
+    border-right: 1px solid var(--gray-200); overflow-y: auto;
+    display: flex; flex-direction: column; z-index: 90; padding-top: 16px;
+  }
+  .sidebar-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; margin: 2px 12px; border-radius: 8px; cursor: pointer;
+    font-size: 13px; font-weight: 500; color: var(--gray-600);
+    transition: all .15s; user-select: none;
+  }
+  .sidebar-item:hover { background: var(--gray-50); color: var(--gray-900); }
+  .sidebar-item.active { background: var(--blue-light); color: var(--blue); font-weight: 600; }
+  .sidebar-item .ms { font-size: 18px; color: inherit; }
+
+  .main { margin-left: var(--sidebar-w); flex: 1; padding: 32px 48px 100px; max-width: 1000px; }
+  
+  .section { display: none; animation: fadeUp .3s ease both; }
+  .section.active { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ─── HEADER ─────────────────────────────────── */
+  .page-title { font-size: 24px; font-weight: 800; color: var(--gray-900); letter-spacing: -0.02em; margin-bottom: 4px; }
+  .page-desc { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; }
+
+  /* ─── CARDS & FORMS ──────────────────────────── */
+  .card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 24px; }
+  .card-header { padding: 20px 24px; border-bottom: 1px solid var(--gray-100); }
+  .card-title { font-size: 15px; font-weight: 700; color: var(--gray-900); }
+  .card-desc { font-size: 13px; color: var(--gray-500); margin-top: 4px; }
+  .card-body { padding: 24px; }
+  .card-footer { padding: 16px 24px; border-top: 1px solid var(--gray-100); background: var(--gray-50); display: flex; justify-content: flex-end; }
+
+  .form-group { margin-bottom: 20px; }
+  .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 8px; }
+  .form-input, .form-select {
+    width: 100%; padding: 10px 14px; border: 1px solid var(--gray-300); border-radius: 8px;
+    font-size: 14px; font-family: 'Inter', sans-serif; color: var(--gray-900);
+    transition: all .2s; outline: none; background: var(--white);
+  }
+  .form-input:focus, .form-select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+  
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* ─── TOGGLE SWITCH ──────────────────────────── */
+  .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--gray-100); }
+  .toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .toggle-info h4 { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
+  .toggle-info p { font-size: 13px; color: var(--gray-500); }
+  
+  .switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--gray-300); transition: .3s; border-radius: 24px; }
+  .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+  input:checked + .slider { background-color: var(--blue); }
+  input:checked + .slider:before { transform: translateX(20px); }
+
+  /* ─── BUTTONS ────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;
+    border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+    border: none; transition: all .15s;
+  }
+  .btn-primary { background: var(--gray-900); color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+  .btn-primary:hover { background: var(--gray-800); box-shadow: 0 4px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+  .btn-secondary { background: var(--white); color: var(--gray-700); border: 1px solid var(--gray-300); }
+  .btn-secondary:hover { background: var(--gray-50); border-color: var(--gray-400); }
+  .btn-danger { background: var(--red-light); color: var(--red); }
+  .btn-danger:hover { background: #FEE2E2; }
+
+  /* ─── INTEGRATION CARDS ──────────────────────── */
+  .integration-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .int-card { display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid var(--gray-200); border-radius: var(--radius); background: var(--white); }
+  .int-info { display: flex; align-items: center; gap: 12px; }
+  .int-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 24px; border-radius: 8px; background: var(--gray-50); border: 1px solid var(--gray-100); }
+  .int-name { font-size: 14px; font-weight: 600; color: var(--gray-900); }
+  .int-status { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+  .int-status.active { color: var(--green); font-weight: 500; }
+
+  /* ─── BILLING CARDS ──────────────────────────── */
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-card { padding: 20px; border: 1px solid var(--gray-200); border-radius: var(--radius); background: var(--white); }
+  .stat-card h3 { font-size: 13px; color: var(--gray-500); font-weight: 600; margin-bottom: 8px; }
+  .stat-card .val { font-size: 24px; font-weight: 800; color: var(--gray-900); }
+  .stat-card .sub { font-size: 12px; color: var(--green); font-weight: 600; margin-top: 4px; }
+
+  /* ─── SYSTEM INFO ────────────────────────────── */
+  .sys-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--gray-200); font-size: 13px; }
+  .sys-row:last-child { border-bottom: none; }
+  .sys-lbl { color: var(--gray-600); }
+  .sys-val { font-weight: 600; color: var(--gray-900); font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+  <!-- NEW TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="topbar-logo" href="index.html">
+        <img src="logo.svg" alt="Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect x=\'20\' y=\'20\' width=\'60\' height=\'60\' rx=\'15\' fill=\'%232563EB\'/><circle cx=\'40\' cy=\'40\' r=\'4\' fill=\'white\'/><circle cx=\'60\' cy=\'40\' r=\'4\' fill=\'white\'/><path d=\'M40 55 Q50 65 60 55\' stroke=\'white\' stroke-width=\'3\' fill=\'none\' stroke-linecap=\'round\'/></svg>'"/>
+        <span>Analytics AI</span>
+      </a>
+      <div class="topbar-divider"></div>
+      <div class="nav-links">
+        <a class="nav-link" href="workspace.html">Upload Dataset</a>
+        <a class="nav-link" href="analytics.html">Analytics</a>
+        <a class="nav-link" href="reports.html">Reports</a>
+        <a class="nav-link active" href="settings.html">Settings</a>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" title="Search"><span class="ms">search</span></button>
+      <button class="icon-btn" title="Notifications"><span class="ms">notifications</span></button>
+      <div class="avatar-sm">
+        <a href="profile.html" style="color:inherit;text-decoration:none;display:block;width:100%;height:100%;text-align:center;line-height:34px;">AN</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-item active" onclick="switchSection('general', this)"><span class="ms">person</span> General</div>
+      <div class="sidebar-item" onclick="switchSection('notifications', this)"><span class="ms">notifications</span> Notifications</div>
+      <div class="sidebar-item" onclick="switchSection('security', this)"><span class="ms">security</span> Security</div>
+      <div class="sidebar-item" onclick="switchSection('ai', this)"><span class="ms">psychology</span> AI Preferences</div>
+      <div class="sidebar-item" onclick="switchSection('dataset', this)"><span class="ms">dataset</span> Dataset Settings</div>
+      <div class="sidebar-item" onclick="switchSection('appearance', this)"><span class="ms">palette</span> Appearance</div>
+      <div class="sidebar-item" onclick="switchSection('integrations', this)"><span class="ms">integration_instructions</span> Connected Services</div>
+      <div class="sidebar-item" onclick="switchSection('billing', this)"><span class="ms">credit_card</span> Billing & Usage</div>
+      <div class="sidebar-item" onclick="switchSection('system', this)"><span class="ms">memory</span> System Info</div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      
+      <!-- GENERAL SETTINGS -->
+      <section id="sec-general" class="section active">
+        <h1 class="page-title">General Settings</h1>
+        <p class="page-desc">Manage your profile information and localization preferences.</p>
+        
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Profile Information</h2>
+            <p class="card-desc">This information will be displayed on your public profile.</p>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" value="Alex Newman">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" value="alex.newman@example.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="text" class="form-input" value="+1 (555) 019-2831">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Organization</label>
+                <input type="text" class="form-input" value="Global Tech Corp">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Localization</h2>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label">Country</label>
+                <select class="form-select">
+                  <option selected>United States</option>
+                  <option>United Kingdom</option>
+                  <option>Canada</option>
+                  <option>India</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Language</label>
+                <select class="form-select">
+                  <option selected>English (US)</option>
+                  <option>Spanish</option>
+                  <option>French</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Timezone</label>
+                <select class="form-select">
+                  <option selected>Pacific Time (PT) UTC-8</option>
+                  <option>Eastern Time (ET) UTC-5</option>
+                  <option>Greenwich Mean Time (GMT) UTC+0</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date Format</label>
+                <select class="form-select">
+                  <option selected>MM/DD/YYYY</option>
+                  <option>DD/MM/YYYY</option>
+                  <option>YYYY-MM-DD</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary">Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTIFICATIONS -->
+      <section id="sec-notifications" class="section">
+        <h1 class="page-title">Notification Settings</h1>
+        <p class="page-desc">Choose how and when you want to be notified.</p>
+        
+        <div class="card">
+          <div class="card-body" style="padding-top:8px;">
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Email Notifications</h4>
+                <p>Receive daily summaries and critical alerts via email.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Push Notifications</h4>
+                <p>Receive real-time alerts in your browser.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>AI Alerts</h4>
+                <p>Notify me when AI detects significant anomalies in my data.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Weekly Reports</h4>
+                <p>Automated weekly intelligence digest.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Monthly Reports</h4>
+                <p>Automated monthly executive summary.</p>
+              </div>
+              <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Security Alerts</h4>
+                <p>Get notified about new logins from unrecognized devices.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Dataset Processing Alerts</h4>
+                <p>Notify me when a large dataset finishes processing.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECURITY -->
+      <section id="sec-security" class="section">
+        <h1 class="page-title">Security Settings</h1>
+        <p class="page-desc">Manage your password and secure your account.</p>
+        
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Change Password</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Current Password</label>
+              <input type="password" class="form-input">
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <input type="password" class="form-input">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm New Password</label>
+                <input type="password" class="form-input">
+              </div>
+            </div>
+            <button class="btn btn-primary" style="margin-top:8px;">Update Password</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="padding-top:8px;">
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Two-Factor Authentication (2FA)</h4>
+                <p>Add an extra layer of security to your account.</p>
+              </div>
+              <button class="btn btn-secondary">Enable 2FA</button>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Google Login</h4>
+                <p>You are currently connected via alex.newman@example.com.</p>
+              </div>
+              <button class="btn btn-secondary" style="color:var(--red);">Disconnect</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header" style="display:flex; justify-content:space-between;">
+            <h2 class="card-title">Device History & Sessions</h2>
+            <button class="btn btn-danger">Logout All Devices</button>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div style="padding:16px 24px; border-bottom:1px solid var(--gray-100); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-weight:600; font-size:14px;">Windows 11 · Chrome</div>
+                <div style="font-size:12px; color:var(--gray-500); margin-top:2px;">San Francisco, USA · IP: 192.168.1.1</div>
+              </div>
+              <span class="tag tag-green" style="font-size:10px;">Active Now</span>
+            </div>
+            <div style="padding:16px 24px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-weight:600; font-size:14px;">MacBook Pro · Safari</div>
+                <div style="font-size:12px; color:var(--gray-500); margin-top:2px;">San Francisco, USA · IP: 192.168.1.2</div>
+              </div>
+              <div style="font-size:12px; color:var(--gray-500);">Last active 2 days ago</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI PREFERENCES -->
+      <section id="sec-ai" class="section">
+        <h1 class="page-title">AI Preferences</h1>
+        <p class="page-desc">Configure the intelligence engine.</p>
+        
+        <div class="card">
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label">Primary AI Model</label>
+                <select class="form-select">
+                  <option selected>Gemini 1.5 Pro</option>
+                  <option>GPT-4o</option>
+                  <option>Claude 3.5 Sonnet</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Analysis Mode</label>
+                <select class="form-select">
+                  <option>Fast (Quick insights)</option>
+                  <option selected>Standard (Balanced)</option>
+                  <option>Advanced (Deep statistical modeling)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Prediction Mode</label>
+                <select class="form-select">
+                  <option selected>Balanced</option>
+                  <option>Accurate (Slower)</option>
+                  <option>High Performance (Heuristic)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="padding-top:8px;">
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Auto Insights</h4>
+                <p>Automatically generate natural language insights on dataset upload.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Auto Recommendations</h4>
+                <p>Suggest business actions based on data trends.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Auto Reports</h4>
+                <p>Generate draft reports immediately after analysis.</p>
+              </div>
+              <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Auto Visualizations</h4>
+                <p>Create default charts for every numerical column.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DATASET SETTINGS -->
+      <section id="sec-dataset" class="section">
+        <h1 class="page-title">Dataset Settings</h1>
+        <p class="page-desc">Manage defaults for data ingestion and processing.</p>
+        
+        <div class="card">
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label">Default Dataset Format</label>
+                <select class="form-select">
+                  <option selected>Auto-detect</option>
+                  <option>CSV</option>
+                  <option>JSON</option>
+                  <option>Excel</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Default Export Format</label>
+                <select class="form-select">
+                  <option selected>PDF</option>
+                  <option>PowerPoint</option>
+                  <option>HTML</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Maximum Upload Size Limit</label>
+                <select class="form-select" disabled>
+                  <option selected>500 MB (Current Plan)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Missing Value Handling</label>
+                <select class="form-select">
+                  <option selected>Mean Imputation</option>
+                  <option>Drop Rows</option>
+                  <option>Flag as Anomaly</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="padding-top:8px;">
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Auto Data Cleaning</h4>
+                <p>Standardize dates, fix encodings, and trim whitespace automatically.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Duplicate Removal</h4>
+                <p>Automatically drop exact duplicate rows on upload.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- APPEARANCE -->
+      <section id="sec-appearance" class="section">
+        <h1 class="page-title">Appearance Settings</h1>
+        <p class="page-desc">Customize the look and feel of the platform.</p>
+        
+        <div class="card">
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label">Theme</label>
+                <select class="form-select">
+                  <option selected>Light Mode</option>
+                  <option disabled>Dark Mode (Coming soon)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Dashboard Density</label>
+                <select class="form-select">
+                  <option>Compact</option>
+                  <option selected>Comfortable</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Chart Style</label>
+                <select class="form-select">
+                  <option selected>Modern (Rounded)</option>
+                  <option>Professional (Sharp)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body" style="padding-top:8px;">
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <h4>Enable Animations</h4>
+                <p>Show smooth transitions and hover effects across the platform.</p>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTEGRATIONS -->
+      <section id="sec-integrations" class="section">
+        <h1 class="page-title">Connected Services</h1>
+        <p class="page-desc">Link your external data sources and workflows.</p>
+        
+        <div class="integration-grid">
+          <div class="int-card">
+            <div class="int-info">
+              <div class="int-icon"><span class="ms">add_to_drive</span></div>
+              <div>
+                <div class="int-name">Google Drive</div>
+                <div class="int-status active">Connected</div>
+              </div>
+            </div>
+            <button class="btn btn-secondary">Disconnect</button>
+          </div>
+          
+          <div class="int-card">
+            <div class="int-info">
+              <div class="int-icon"><span class="ms">table_chart</span></div>
+              <div>
+                <div class="int-name">Google Sheets</div>
+                <div class="int-status active">Connected</div>
+              </div>
+            </div>
+            <button class="btn btn-secondary">Disconnect</button>
+          </div>
+
+          <div class="int-card">
+            <div class="int-info">
+              <div class="int-icon"><span class="ms">database</span></div>
+              <div>
+                <div class="int-name">BigQuery</div>
+                <div class="int-status">Not connected</div>
+              </div>
+            </div>
+            <button class="btn btn-secondary">Connect</button>
+          </div>
+
+          <div class="int-card">
+            <div class="int-info">
+              <div class="int-icon"><span class="ms">cloud</span></div>
+              <div>
+                <div class="int-name">Google Cloud Storage</div>
+                <div class="int-status">Not connected</div>
+              </div>
+            </div>
+            <button class="btn btn-secondary">Connect</button>
+          </div>
+          
+          <div class="int-card">
+            <div class="int-info">
+              <div class="int-icon"><span class="ms">code</span></div>
+              <div>
+                <div class="int-name">GitHub</div>
+                <div class="int-status">Not connected</div>
+              </div>
+            </div>
+            <button class="btn btn-secondary">Connect</button>
+          </div>
+          
+          <div class="int-card">
+            <div class="int-info">
+              <div class="int-icon"><span class="ms">storage</span></div>
+              <div>
+                <div class="int-name">Firebase</div>
+                <div class="int-status">Not connected</div>
+              </div>
+            </div>
+            <button class="btn btn-secondary">Connect</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- BILLING -->
+      <section id="sec-billing" class="section">
+        <h1 class="page-title">Billing & Usage</h1>
+        <p class="page-desc">Manage your subscription and monitor usage limits.</p>
+        
+        <div class="stat-grid">
+          <div class="stat-card">
+            <h3>Current Plan</h3>
+            <div class="val">Enterprise</div>
+            <div class="sub" style="color:var(--gray-500)">$499 / month</div>
+          </div>
+          <div class="stat-card">
+            <h3>Storage Usage</h3>
+            <div class="val">42.5 GB</div>
+            <div class="sub">of 100 GB</div>
+          </div>
+          <div class="stat-card">
+            <h3>API Requests</h3>
+            <div class="val">1.2M</div>
+            <div class="sub">of 5M limit</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Subscription Management</h2>
+          </div>
+          <div class="card-body">
+            <p style="font-size:14px; color:var(--gray-600); margin-bottom:24px;">Your next billing cycle begins on <b>Nov 1, 2024</b>. You have 3.8M remaining API credits.</p>
+            <div style="display:flex; gap:12px;">
+              <button class="btn btn-primary">Upgrade Plan</button>
+              <button class="btn btn-secondary">Download Invoice</button>
+              <button class="btn btn-secondary">Billing History</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SYSTEM INFO -->
+      <section id="sec-system" class="section">
+        <h1 class="page-title">System Information</h1>
+        <p class="page-desc">Platform diagnostics and versioning.</p>
+        
+        <div class="card">
+          <div class="card-body">
+            <div class="sys-row"><div class="sys-lbl">Platform Version</div><div class="sys-val">v4.2.1-prod</div></div>
+            <div class="sys-row"><div class="sys-lbl">API Version</div><div class="sys-val">v2.0.4</div></div>
+            <div class="sys-row"><div class="sys-lbl">Last Update</div><div class="sys-val">Oct 12, 2024 14:02 UTC</div></div>
+            <div class="sys-row"><div class="sys-lbl">Server Status</div><div class="sys-val" style="color:var(--green)">Operational (99.99%)</div></div>
+            <div class="sys-row"><div class="sys-lbl">Storage Region</div><div class="sys-val">US-Central1 (Google Cloud)</div></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    function switchSection(id, el) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+      document.getElementById('sec-' + id).classList.add('active');
+      el.classList.add('active');
+    }
+  </script>
+</body>
+</html>

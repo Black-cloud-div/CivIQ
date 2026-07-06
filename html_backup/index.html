@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI4Community | Transform Data into Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "tertiary-fixed-dim": "#c4c7c9",
+          "on-surface-variant": "#434655",
+          "on-surface": "#131b2e",
+          "on-tertiary-container": "#eff1f3",
+          "surface-tint": "#0053db",
+          "on-error": "#ffffff",
+          "primary": "#004ac6",
+          "error": "#ba1a1a",
+          "primary-fixed": "#dbe1ff",
+          "tertiary-fixed": "#e0e3e5",
+          "on-primary-container": "#eeefff",
+          "tertiary": "#525657",
+          "surface-dim": "#d2d9f4",
+          "outline": "#737686",
+          "surface-bright": "#faf8ff",
+          "on-primary-fixed-variant": "#003ea8",
+          "primary-container": "#2563eb",
+          "on-tertiary-fixed": "#191c1e",
+          "secondary-fixed": "#eaddff",
+          "on-tertiary": "#ffffff",
+          "primary-fixed-dim": "#b4c5ff",
+          "inverse-surface": "#283044",
+          "on-primary": "#ffffff",
+          "background": "#faf8ff",
+          "on-secondary": "#ffffff",
+          "error-container": "#ffdad6",
+          "surface-container-lowest": "#ffffff",
+          "surface-container": "#eaedff",
+          "inverse-on-surface": "#eef0ff",
+          "tertiary-container": "#6b6e70",
+          "surface-variant": "#dae2fd",
+          "on-error-container": "#93000a",
+          "surface-container-low": "#f2f3ff",
+          "on-secondary-fixed": "#25005a",
+          "on-background": "#131b2e",
+          "on-tertiary-fixed-variant": "#444749",
+          "secondary-container": "#8a4cfc",
+          "outline-variant": "#c3c6d7",
+          "surface": "#faf8ff",
+          "inverse-primary": "#b4c5ff",
+          "surface-container-high": "#e2e7ff",
+          "on-secondary-fixed-variant": "#5a00c6",
+          "on-primary-fixed": "#00174b",
+          "on-secondary-container": "#fffbff",
+          "secondary": "#712ae2",
+          "secondary-fixed-dim": "#d2bbff",
+          "surface-container-highest": "#dae2fd"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "2xl": "1rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-page": "40px",
+          "stack-md": "16px",
+          "stack-sm": "8px",
+          "stack-lg": "32px",
+          "container-max": "1280px",
+          "gutter": "24px"
+        },
+        "fontFamily": {
+          "headline-lg": ["Inter"],
+          "body-lg": ["Inter"],
+          "headline-md": ["Inter"],
+          "headline-lg-mobile": ["Inter"],
+          "body-md": ["Inter"],
+          "code": ["JetBrains Mono"],
+          "headline-xl": ["Inter"],
+          "label-md": ["Inter"]
+        },
+        "fontSize": {
+          "headline-lg": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+          "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+          "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+          "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+          "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+          "code": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+          "headline-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+          "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "500"}]
+        }
+      },
+    },
+  }
+</script>
+<style>
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+  }
+  .float-anim {
+    animation: floating 6s ease-in-out infinite;
+  }
+  .gradient-primary {
+    background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm">
+  <nav class="max-w-container-max mx-auto px-margin-page py-stack-md flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <img alt="AI4Community Logo" class="w-10 h-10 object-contain" src="logo.svg"/>
+      <span class="font-headline-md text-headline-md font-bold text-on-surface">AI4Community</span>
+    </div>
+    <div class="hidden md:flex items-center gap-stack-lg">
+      <a class="font-body-md text-body-md font-bold text-primary border-b-2 border-primary" href="#">Features</a>
+      <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">About</a>
+      <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="workspace.html" class="px-6 py-2 rounded-lg font-label-md text-label-md transition-all hover:bg-surface-variant/50 text-on-surface-variant">Login</a>
+      <a href="workspace.html" class="gradient-primary text-white px-6 py-2 rounded-lg font-label-md text-label-md shadow-md hover:opacity-90 active:scale-95 transition-all">Get Started</a>
+    </div>
+  </nav>
+</header>
+
+<main class="pt-32">
+  <!-- Hero Section -->
+  <section class="relative max-w-container-max mx-auto px-margin-page mb-32">
+    <div class="grid lg:grid-cols-2 gap-gutter items-center">
+      <div class="reveal active">
+        <h1 class="font-headline-xl text-headline-xl mb-6 text-on-surface leading-tight">
+          Transform Any Data Into <span class="text-primary-container">Intelligent Decisions</span>
+        </h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-xl">
+          Upload any dataset, ask questions in natural language, and get AI-powered insights, analytics, predictions, and recommendations in seconds.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="workspace.html" class="gradient-primary text-white px-8 py-4 rounded-xl font-headline-md text-body-md shadow-lg hover:shadow-primary/20 hover:scale-[1.02] transition-all flex items-center gap-2">
+            Get Started
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+          <button class="glass-card px-8 py-4 rounded-xl font-headline-md text-body-md text-on-surface flex items-center gap-2 hover:bg-white/90 transition-all border border-outline-variant">
+            <span class="material-symbols-outlined">login</span>
+            Login with Google
+          </button>
+        </div>
+      </div>
+      <div class="relative reveal active delay-150">
+        <!-- Hero Visual -->
+        <div class="relative w-full aspect-square flex items-center justify-center">
+          <!-- Abstract Background Decoration -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-primary-fixed to-secondary-fixed opacity-30 blur-3xl rounded-full"></div>
+          <!-- Floating 3D Elements Simulated with Glassmorphism Cards -->
+          <div class="relative w-full h-full flex items-center justify-center">
+            <div class="glass-card p-6 rounded-2xl w-64 absolute -top-4 -left-4 float-anim z-10">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <span class="material-symbols-outlined">analytics</span>
+                </div>
+                <div class="h-4 w-24 bg-surface-variant rounded"></div>
+              </div>
+              <div class="space-y-2">
+                <div class="h-2 w-full bg-surface-variant/50 rounded"></div>
+                <div class="h-2 w-3/4 bg-surface-variant/50 rounded"></div>
+              </div>
+            </div>
+            <div class="glass-card p-8 rounded-3xl w-80 shadow-xl border-white/40 z-20 relative overflow-hidden">
+              <div class="h-40 w-full mb-6 bg-surface-container-high rounded-xl relative overflow-hidden">
+                <div class="absolute bottom-0 left-0 w-full h-24 flex items-end gap-1 px-4">
+                  <div class="flex-1 bg-primary/40 rounded-t h-[30%]"></div>
+                  <div class="flex-1 bg-primary/60 rounded-t h-[60%]"></div>
+                  <div class="flex-1 bg-primary/80 rounded-t h-[45%]"></div>
+                  <div class="flex-1 bg-secondary/70 rounded-t h-[90%]"></div>
+                  <div class="flex-1 bg-primary rounded-t h-[70%]"></div>
+                </div>
+              </div>
+              <div class="font-headline-md text-headline-md mb-2">Predictive Analysis</div>
+              <div class="text-on-surface-variant text-label-md">Revenue growth expected +12%</div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl w-56 absolute -bottom-8 -right-4 float-anim z-30" style="animation-delay: 1.5s">
+              <div class="flex items-center justify-between mb-4">
+                <span class="font-bold text-secondary">AI Recommendation</span>
+                <span class="material-symbols-outlined text-secondary">auto_awesome</span>
+              </div>
+              <div class="h-2 w-full bg-secondary/10 rounded mb-2"></div>
+              <div class="h-2 w-1/2 bg-secondary/10 rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Bento Grid -->
+  <section class="max-w-container-max mx-auto px-margin-page py-stack-lg mb-32">
+    <div class="text-center mb-16 reveal">
+      <h2 class="font-headline-lg text-headline-lg mb-4">Enterprise Capabilities</h2>
+      <p class="text-on-surface-variant max-w-2xl mx-auto">Powerful AI-driven tools designed to bridge the gap between raw data and actionable business intelligence.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Feature 1: Upload -->
+      <div class="glass-card p-8 rounded-2xl reveal group hover:scale-[1.02] transition-transform">
+        <div class="w-14 h-14 gradient-primary text-white rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-primary/30 transition-all">
+          <span class="material-symbols-outlined text-3xl">cloud_upload</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md mb-3">Upload Any Dataset</h3>
+        <p class="text-on-surface-variant">Seamlessly ingest CSV, JSON, SQL, or Excel files. Our AI handles the cleaning and structuring automatically.</p>
+      </div>
+      <!-- Feature 2: Insights -->
+      <div class="glass-card p-8 rounded-2xl reveal group hover:scale-[1.02] transition-transform delay-75">
+        <div class="w-14 h-14 gradient-primary text-white rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-primary/30 transition-all">
+          <span class="material-symbols-outlined text-3xl">psychology</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md mb-3">AI-Powered Insights</h3>
+        <p class="text-on-surface-variant">Ask questions like "Why did sales dip in Q3?" and receive natural language explanations grounded in your data.</p>
+      </div>
+      <!-- Feature 3: Analytics -->
+      <div class="glass-card p-8 rounded-2xl reveal group hover:scale-[1.02] transition-transform delay-150">
+        <div class="w-14 h-14 gradient-primary text-white rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-primary/30 transition-all">
+          <span class="material-symbols-outlined text-3xl">monitoring</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md mb-3">Automated Analytics</h3>
+        <p class="text-on-surface-variant">Real-time dashboards that build themselves. Dynamic charts that visualize patterns you didn't know existed.</p>
+      </div>
+      <!-- Feature 4: Forecasting -->
+      <div class="glass-card p-8 rounded-2xl reveal group hover:scale-[1.02] transition-transform delay-225">
+        <div class="w-14 h-14 gradient-primary text-white rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-primary/30 transition-all">
+          <span class="material-symbols-outlined text-3xl">timeline</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md mb-3">Forecasting</h3>
+        <p class="text-on-surface-variant">Utilize advanced machine learning models to predict future trends and seasonal variations with high accuracy.</p>
+      </div>
+      <!-- Feature 5: Recommendations -->
+      <div class="glass-card p-8 rounded-2xl reveal group hover:scale-[1.02] transition-transform delay-300">
+        <div class="w-14 h-14 gradient-primary text-white rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-primary/30 transition-all">
+          <span class="material-symbols-outlined text-3xl">tips_and_updates</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md mb-3">Recommendations</h3>
+        <p class="text-on-surface-variant">Our AI doesn't just show data; it suggests actions to optimize performance and mitigate risks in real-time.</p>
+      </div>
+      <!-- Feature 6: Report Generation -->
+      <div class="glass-card p-8 rounded-2xl reveal group hover:scale-[1.02] transition-transform delay-375">
+        <div class="w-14 h-14 gradient-primary text-white rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-primary/30 transition-all">
+          <span class="material-symbols-outlined text-3xl">description</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md mb-3">Report Generation</h3>
+        <p class="text-on-surface-variant">Export professional, board-ready reports in PDF or PPT format with a single click of a button.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic CTA -->
+  <section class="max-w-container-max mx-auto px-margin-page mb-32">
+    <div class="relative overflow-hidden rounded-3xl p-12 md:p-20 bg-inverse-surface text-white reveal">
+      <div class="relative z-10 max-w-2xl">
+        <h2 class="font-headline-xl text-headline-xl mb-6">Ready to empower your community with intelligence?</h2>
+        <p class="text-primary-fixed mb-10 text-body-lg">Join 500+ enterprises using AI4Community to automate their data workflows.</p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="workspace.html" class="bg-white text-primary px-8 py-4 rounded-xl font-bold hover:bg-opacity-90 transition-all text-center">Create Free Account</a>
+          <button class="bg-transparent border border-white/30 text-white px-8 py-4 rounded-xl font-bold hover:bg-white/10 transition-all">Book a Demo</button>
+        </div>
+      </div>
+      <!-- Abstract Graphic -->
+      <div class="absolute right-0 top-0 w-1/3 h-full opacity-10 blur-2xl bg-gradient-to-br from-primary to-secondary"></div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-margin-page flex flex-col md:flex-row justify-between items-center gap-stack-md bg-surface-container-lowest border-t border-outline-variant/20">
+  <div class="flex flex-col gap-2">
+    <div class="flex items-center gap-2">
+      <img alt="AI4Community Logo" class="w-8 h-8" src="logo.svg"/>
+      <span class="font-bold text-on-surface">AI4Community</span>
+    </div>
+    <p class="font-label-md text-label-md text-on-surface-variant">© 2024 AI4Community. All rights reserved.</p>
+  </div>
+  <div class="flex flex-wrap justify-center gap-stack-lg">
+    <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+    <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+    <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Security</a>
+    <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Help Center</a>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for scroll reveal animations
+  const observerOptions = { threshold: 0.1 };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, observerOptions);
+  document.querySelectorAll('.reveal').forEach((el) => {
+    observer.observe(el);
+  });
+
+  // Hover lift effect for feature cards
+  document.querySelectorAll('.glass-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'translateY(-4px)';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'translateY(0)';
+    });
+  });
+</script>
+</body>
+</html>

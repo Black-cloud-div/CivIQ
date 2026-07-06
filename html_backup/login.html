@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI4Community | Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue:        #2563EB;
+    --blue-light:  #EFF6FF;
+    --blue-mid:    #BFDBFE;
+    --purple:      #7C3AED;
+    --purple-light:#F5F3FF;
+    --purple-mid:  #DDD6FE;
+    --gray-50:     #F8FAFC;
+    --gray-100:    #F1F5F9;
+    --gray-200:    #E2E8F0;
+    --gray-300:    #CBD5E1;
+    --gray-400:    #94A3B8;
+    --gray-500:    #64748B;
+    --gray-600:    #475569;
+    --gray-700:    #334155;
+    --gray-800:    #1E293B;
+    --gray-900:    #0F172A;
+    --white:       #FFFFFF;
+    --shadow-sm:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md:   0 4px 12px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.04);
+    --shadow-lg:   0 10px 32px rgba(0,0,0,.08), 0 4px 8px rgba(0,0,0,.04);
+    --radius-lg:   16px;
+    --radius-xl:   24px;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--gray-800);
+    background: var(--white);
+    min-height: 100vh;
+    display: flex;
+  }
+  
+  /* ─── LEFT SECTION ─────────────────────── */
+  .left-pane {
+    flex: 1;
+    background: linear-gradient(135deg, var(--blue-light) 0%, var(--purple-light) 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 60px;
+    overflow: hidden;
+  }
+  .left-pane::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1.5" fill="%232563EB" fill-opacity="0.1"/></svg>') repeat;
+    opacity: 0.6;
+  }
+  
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 10;
+    text-decoration: none;
+  }
+  .brand svg { width: 36px; height: 36px; }
+  .brand span { font-size: 20px; font-weight: 800; color: var(--gray-900); letter-spacing: -0.02em; }
+  
+  .hero-content {
+    margin-top: auto;
+    margin-bottom: auto;
+    position: relative;
+    z-index: 10;
+    max-width: 500px;
+  }
+  .hero-title {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--gray-900);
+    margin-bottom: 24px;
+    letter-spacing: -0.03em;
+  }
+  .hero-title span {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--gray-600);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  
+  .illustration {
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 600px;
+    height: 500px;
+    pointer-events: none;
+  }
+  .glass-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    padding: 20px;
+    animation: float 6s ease-in-out infinite;
+  }
+  .gc-1 { top: 100px; left: 100px; width: 200px; animation-delay: 0s; }
+  .gc-2 { top: 220px; left: 240px; width: 280px; animation-delay: -2s; }
+  .gc-3 { top: 320px; left: 40px;  width: 240px; animation-delay: -4s; }
+  
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  /* ─── RIGHT SECTION ────────────────────── */
+  .right-pane {
+    width: 480px;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding: 40px 60px;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.03);
+    position: relative;
+    z-index: 20;
+  }
+  
+  .login-wrapper {
+    margin: auto 0;
+  }
+  
+  .login-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--gray-900);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .login-sub {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-bottom: 32px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: var(--gray-900);
+    transition: all 0.2s;
+    background: var(--gray-50);
+  }
+  .form-input:focus {
+    background: var(--white);
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.1);
+    outline: none;
+  }
+  .form-input.error {
+    border-color: var(--red);
+    box-shadow: 0 0 0 4px rgba(239,68,68,0.1);
+  }
+  .error-text {
+    font-size: 12px;
+    color: var(--red);
+    margin-top: 6px;
+    display: none;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 36px;
+    color: var(--gray-400);
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .password-toggle:hover { color: var(--gray-600); }
+  
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--gray-300);
+    cursor: pointer;
+    accent-color: var(--blue);
+  }
+  .checkbox-label {
+    font-size: 13px;
+    color: var(--gray-600);
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .forgot-link {
+    font-size: 13px;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .forgot-link:hover { text-decoration: underline; }
+  
+  .btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--gray-900);
+    color: var(--white);
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .btn-primary:hover {
+    background: var(--gray-800);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  }
+  .btn-google {
+    background: var(--white);
+    color: var(--gray-700);
+    border: 1px solid var(--gray-200);
+  }
+  .btn-google:hover {
+    background: var(--gray-50);
+    border-color: var(--gray-300);
+  }
+  
+  .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 24px 0;
+    color: var(--gray-400);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .divider:not(:empty)::before { margin-right: 12px; }
+  .divider:not(:empty)::after { margin-left: 12px; }
+  
+  .footer-links {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+  .footer-links a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .footer-links a:hover { text-decoration: underline; }
+  
+  .footer-copyright {
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: auto;
+  }
+  
+  /* Loading state */
+  .btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+  .btn.loading .ms {
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+  
+  /* Responsive */
+  @media(max-width: 900px) {
+    .left-pane { display: none; }
+    .right-pane { width: 100%; padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- LEFT SECTION -->
+  <div class="left-pane">
+    <a href="index.html" class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2563EB;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <rect x="20" y="20" width="60" height="60" rx="15" fill="url(#grad)" />
+        <path d="M40 35 L60 35 L60 65 L40 65 Z" fill="white" fill-opacity="0.2" />
+        <circle cx="40" cy="40" r="4" fill="white" />
+        <circle cx="60" cy="40" r="4" fill="white" />
+        <path d="M40 55 Q50 65 60 55" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" />
+      </svg>
+      <span>AI4Community</span>
+    </a>
+    
+    <div class="hero-content">
+      <h1 class="hero-title">Transform Any Dataset Into <span>Intelligent Decisions</span></h1>
+      <p class="hero-sub">Upload datasets, interact with AI, generate insights, analytics, predictions, and reports in a unified enterprise workspace.</p>
+    </div>
+    
+    <div class="illustration">
+      <!-- Decorative Glass Cards simulating dashboard elements -->
+      <div class="glass-card gc-1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span class="ms" style="color:var(--green);font-size:18px">check_circle</span>
+          <span style="font-size:12px;font-weight:600;color:var(--gray-700)">Data Cleaned</span>
+        </div>
+        <div style="height:6px;background:var(--gray-200);border-radius:3px;margin-bottom:8px"><div style="height:100%;width:100%;background:var(--green);border-radius:3px"></div></div>
+      </div>
+      
+      <div class="glass-card gc-2">
+        <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+          <span style="font-size:12px;font-weight:600;color:var(--gray-500)">AI Confidence</span>
+          <span style="font-size:12px;font-weight:800;color:var(--blue)">98%</span>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:6px;height:40px">
+          <div style="flex:1;background:var(--blue-light);border-radius:4px 4px 0 0;height:40%"></div>
+          <div style="flex:1;background:var(--blue-light);border-radius:4px 4px 0 0;height:60%"></div>
+          <div style="flex:1;background:var(--blue-light);border-radius:4px 4px 0 0;height:50%"></div>
+          <div style="flex:1;background:var(--blue);border-radius:4px 4px 0 0;height:90%"></div>
+          <div style="flex:1;background:var(--purple);border-radius:4px 4px 0 0;height:100%"></div>
+        </div>
+      </div>
+      
+      <div class="glass-card gc-3">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:32px;height:32px;border-radius:8px;background:var(--purple-light);display:flex;align-items:center;justify-content:center;color:var(--purple)"><span class="ms" style="font-size:18px">auto_awesome</span></div>
+          <div>
+            <div style="font-size:12px;font-weight:600;color:var(--gray-800)">Insight Generated</div>
+            <div style="font-size:10px;color:var(--gray-500)">Just now</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- RIGHT SECTION -->
+  <div class="right-pane">
+    <div class="login-wrapper">
+      <h2 class="login-title">Welcome Back</h2>
+      <p class="login-sub">Sign in to access your AI workspace</p>
+      
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="email" class="form-input" placeholder="name@company.com" required autocomplete="email" />
+          <div class="error-text" id="emailError">Please enter a valid email.</div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="current-password" />
+          <span class="ms password-toggle" onclick="togglePassword()" id="eyeIcon">visibility_off</span>
+          <div class="error-text" id="passwordError">Password must be at least 8 characters.</div>
+        </div>
+        
+        <div class="form-options">
+          <label class="checkbox-group">
+            <input type="checkbox" class="checkbox-input" checked />
+            <span class="checkbox-label">Remember Me</span>
+          </label>
+          <a href="#" class="forgot-link">Forgot Password?</a>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          Sign In
+        </button>
+        
+        <div class="divider">OR</div>
+        
+        <button type="button" class="btn btn-google">
+          <svg style="width:18px;height:18px" viewBox="0 0 24 24">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+      </form>
+      
+      <div class="footer-links">
+        Don't have an account? <a href="#">Create Account</a><br/>
+        Need help? <a href="#">Contact Administrator</a>
+      </div>
+    </div>
+    
+    <div class="footer-copyright">
+      &copy; 2026 AI4Community. All rights reserved.
+    </div>
+  </div>
+
+<script>
+  function togglePassword() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('eyeIcon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.textContent = 'visibility';
+    } else {
+      input.type = 'password';
+      icon.textContent = 'visibility_off';
+    }
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const email = document.getElementById('email').value;
+    const pwd = document.getElementById('password').value;
+    let valid = true;
+    
+    document.getElementById('email').classList.remove('error');
+    document.getElementById('emailError').style.display = 'none';
+    document.getElementById('password').classList.remove('error');
+    document.getElementById('passwordError').style.display = 'none';
+    
+    if (!email || !email.includes('@')) {
+      document.getElementById('email').classList.add('error');
+      document.getElementById('emailError').style.display = 'block';
+      valid = false;
+    }
+    
+    if (pwd.length < 8) {
+      document.getElementById('password').classList.add('error');
+      document.getElementById('passwordError').style.display = 'block';
+      valid = false;
+    }
+    
+    if (!valid) return;
+    
+    // Simulate API call
+    btn.classList.add('loading');
+    btn.innerHTML = '<span class="ms">refresh</span> Signing in...';
+    
+    setTimeout(() => {
+      window.location.href = 'workspace.html';
+    }, 1500);
+  }
+</script>
+</body>
+</html>
