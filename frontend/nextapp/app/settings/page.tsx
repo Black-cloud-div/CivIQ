@@ -61,7 +61,7 @@ function SelectField({ label, options, def }: { label: string; options: string[]
 export default function SettingsPage() {
   const [active, setActive] = useState("general");
   const [saved, setSaved] = useState(false);
-  const [profile, setProfile] = useState<any>({});
+  const [profile, setProfile] = useState<Record<string, string>>({});
 
   useEffect(() => {
     getProfile()

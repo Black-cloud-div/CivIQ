@@ -3,10 +3,10 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import {
   User, Database, Brain, FileText, Activity, ShieldAlert, Award,
-  Download, Calendar, TrendingUp, Sparkles, CheckCircle2, ChevronRight, Edit2, Camera
+  Download, Calendar, TrendingUp, Sparkles, CheckCircle2, ChevronRight, Edit2, Camera, Clock
 } from "lucide-react";
 import {
-  AreaChart, Area, BarChart, Bar, ResponsiveContainer, Tooltip, XAxis, YAxis
+  AreaChart, Area, BarChart, Bar, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid
 } from "recharts";
 
 const kpis = [
