@@ -1,1 +1,8 @@
-{}
+{
+  "name": "civiq-root",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cd frontend/nextapp && npm install && npm run build",
+    "start": "cd frontend/nextapp && npm run start"
+  }
+}
